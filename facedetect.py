@@ -11,14 +11,13 @@ def draw(frame, eyes):
 
     center = pyopencv.Point(int(round(r.x + r.width * 0.5)),
                             int(round(r.y + r.height * 0.5)))
-    #radius = int(round((r.width + r.height) * 0.25))
     pyopencv.rectangle(frame, pt1, pt2, pyopencv.CV_RGB(255, 0, 0), 2,
                     pyopencv.CV_AA, 0)
 
     pyopencv.imshow(winName, frame)
 
 def detect(frame, cascade, fallbackCascade):
-    minPairSize = pyopencv.Size(20, 20)
+    minPairSize = pyopencv.Size(50, 50)
 
     haarScale = 1.1
     minNeighbors = 0
@@ -33,7 +32,8 @@ def detect(frame, cascade, fallbackCascade):
 
     if len(eyes) == 0:
         eyes = fallbackCascade.detectMultiScale(grayImg, haarScale,
-                                        minNeighbors, haarFlags|pyopencv.CascadeClassifier.SCALE_IMAGE, minPairSize)
+                        minNeighbors, haarFlags
+                        |pyopencv.CascadeClassifier.SCALE_IMAGE, minPairSize)
 
     if len(eyes) != 0:
         draw(frame, eyes)
@@ -65,6 +65,6 @@ if __name__ == '__main__':
     cascade.load("haarcascades/haarcascade_mcs_eyepair_big.xml")
 
     fallbackCascade = pyopencv.CascadeClassifier()
-    fallbackCascade.load("haarcascades/haarcascade_profileface.xml")
+    fallbackCascade.load("haarcascades/haarcascade_mcs_eyepair_small.xml")
 
     capture(winName, cascade, fallbackCascade)
