@@ -69,8 +69,6 @@ def draw(frame, eyes, glasses):
             region.width = int(round(newWidth))
             region.height = int(round(newHeight))
 
-            print region
-
             if region.width < fadeoutLim or region.height < fadeoutLim:
                 region = None
                 previousROI = None
